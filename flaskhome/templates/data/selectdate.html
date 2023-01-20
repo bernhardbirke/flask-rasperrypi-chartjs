@@ -1,0 +1,78 @@
+<!--select date-->
+
+{% extends 'layout.html' %} 
+{% block scripts %}
+<script src="{{url_for('static',filename='data/chart.js')}}"></script>
+<script src="{{url_for('static',filename='data/luxon')}}"></script>
+<script src="{{url_for('static',filename='data/chartjs-adapter-luxon')}}"></script>
+<script src="{{url_for('static',filename='script.js')}}" type="module" defer></script>
+
+{% endblock %}
+
+{% block header %}
+<h1 class="title title-large">{{title}} - Raspi Home</h1>
+{% endblock %} 
+{% block content %}
+
+<div>
+<label for="beginning">Enter starting date and time:</label>
+<input
+  id="beginning"
+  type="datetime-local"
+  name="beginning"
+  value="2023-01-19T08:30" />
+</div>
+<div>
+<label for="ending">Enter ending date and time: </label>
+<input
+  id="ending"
+  type="datetime-local"
+  name="ending"
+  value="2023-01-19T20:30" />
+</div>
+<div>(Format: yyyy-mm-ddThh:mm)</label></div>
+
+
+  <div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+
+{% endblock %}
+
+{% block footer %}
+<div class="container main-footer-container">
+  <h3 class="title">
+  W52 TBE
+  </H3>
+  
+  <UL class="nav footer-nav">
+      <Li>
+      <a href="https://youtube.com" 
+      Target="_blank"  >
+      <img 
+      src="images/youtube_logo.png">
+      </a>
+      </Li>
+      <Li>
+       <a
+       href="https://facebook.com" 
+      Target="_blank"  >
+      <img 
+      src="images/facebook_logo.png">
+      </a> 
+      
+      
+      </Li>
+      <Li>
+       <a href="https://instagram.com" 
+      Target="_blank"  >
+      <img src="images/insta_logo.png">
+      </a>
+      
+      
+      
+      </Li>
+  </UL>
+</div>  
+{% endblock %}

@@ -1,0 +1,32 @@
+<!--basic layout -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}} - Raspi Home</title>
+    <meta charset="utf-8" />
+    <meta name="Viewport" content="Width=Device-Width, initial-Scale=1" />
+    <meta name="description" content="{{description}}" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    {% block scripts %}{% endblock %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <header class="main-header">
+      {% block header %}{% endblock %} {% include 'navigation.html' %} {% for
+      message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+      {% endfor %}
+    </header>
+
+    <main>
+      <section class="container content-section">
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+    <footer class="main-footer">{% block footer %}{% endblock %}</footer>
+  </body>
+</html>

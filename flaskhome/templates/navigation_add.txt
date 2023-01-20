@@ -1,0 +1,3 @@
+    <li><a href="{{ url_for('data.electricity') }}">Electricity</a></li>
+    <li><a href="{{ url_for('data.climate') }}">Climate</a></li>
+    <li><a href="{{ url_for('data.water') }}">Water</a></li>
