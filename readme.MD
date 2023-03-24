@@ -1,3 +1,7 @@
+## To test run flask directly
+
+flask --app flaskhome --debug run
+
 ## Deploy to production:
 
 Create a project folder and a venv folder within:
@@ -23,3 +27,26 @@ Chart JS can be served via cdn or saved locally. I have it in /static/data. If y
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
 
 ```
+
+## Make sure..
+
+to set the right path to the raw data files.
+
+## install the project
+
+(necessary to use the WSGI -Server )
+pip install -e .
+
+## Deploy to production
+
+Navigate to the project root folder:
+
+source ./venv/bin/activate
+
+waitress-serve --call 'flaskhome:create_app'
+
+## Climate (Weewx and Klimalogg Pro)
+
+Install Weewx on the Rasperry Pi using the instructions on https://github.com/matthewwall/weewx-klimalogg
+
+A SQ Lite database file can be found at /var/lib/weewx/. Other files are stored according to https://weewx.com/docs/usersguide.htm

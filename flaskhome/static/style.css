@@ -1,13 +1,4 @@
-/* css stylesheet*/
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Metal Mania");
-
-@font-face {
-  font-family: "Booter - Zero Zero";
-  src: url("fonts/Booter - Zero Zero.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+/* css stylesheet */
 
 * {
   box-sizing: border-box;
@@ -90,14 +81,6 @@ Body {
   font-size: 2.5em;
 }
 
-.about-band-image {
-  float: left;
-  height: 200px;
-  width: 200px;
-  margin: 15px;
-  border-radius: 50%;
-}
-
 .main-footer {
   background-color: #56ccf2;
   color: white;
@@ -123,218 +106,167 @@ Body {
   height: 30px;
 }
 
-.btn {
-  text-align: center;
-  vertical-align: middle;
-  padding: 0.67em;
-  curser: pointer;
+.grid-main {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-auto-rows: minmax(100px, auto);
+  justify-content: center;
+  align-content: top;
+  grid-gap: 0px;
+  max-width: 1200px;
 }
 
-.btn-header {
-  margin: 0.5em 15% 2em 15%;
-  color: white;
-  border: 2px solid #2d9cdb;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 0;
-  font-size: 1.5em;
-  font-weight: lighter;
-  padding-left: 2em;
-  padding-right: 2em;
+.grid-item {
+  border: 1px solid #333;
+  background-color: #dfdfdf;
 }
 
-.btn-header:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-.btn-play {
-  display: block;
-  margin: 0 auto;
-  color: #2d9cdb;
-  font-size: 2em;
-  border-radius: 50%;
-  padding: 0;
-  width: 100px;
-  height: 100px;
-}
-
-.tour-row {
-  border-bottom: 1px solid black;
-  padding: 1em;
-  margin: 1em;
-}
-
-.tour-row:last-child {
-  border: none;
-}
-
-.tour-item {
-  display: inline-block;
-  padding-right: 0.5em;
-}
-
-.tour-date {
-  color: #555;
-  font-weight: bold;
-  width: 11%;
-}
-
-.tour-city {
-  width: 24%;
-}
-
-.tour-arena {
-  width: 42%;
-}
-
-.tour-btn {
-  max-width: 19%;
-}
-
-.btn-primary {
-  color: white;
-  background-color: #56ccf2;
-  border: none;
-  border-radius: 0.3em;
-  font-weight: bold;
-}
-
-.btn-primary:hover {
-  background-color: #2d9cd8;
-}
-
-.shop-item {
-  margin: 30px;
-}
-
-.shop-item-title {
-  display: block;
+.grid-item img {
   width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 15px;
+  /*  object-fit: contain; */
+  cursor: pointer;
+  /*  aspect-ratio: 1; */
 }
 
-.shop-item-image {
-  height: 250px;
+.grid-item-1 {
+  grid-column: 1;
+  grid-row: 1;
 }
 
-.shop-item-details {
-  display: flex;
-  align-items: center;
-  padding: 5px;
+.grid-item-2 {
+  grid-column: 2;
+  grid-row: 1;
+  max-width: 330px;
 }
 
-.shop-item-price {
-  flex-grow: 1;
-  color: #333;
+.grid-item-3 {
+  grid-column: 1;
+  grid-row: 2;
 }
 
-.shop-items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.grid-item-4 {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 330px;
 }
 
-.cart-header {
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #333;
+.grid-item-5 {
+  grid-column: 1;
+  grid-row: 3;
 }
 
-.cart-column {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid black;
-  margin-right: 1.5em;
-  padding-bottom: 10px;
-  margin-top: 10px;
+.grid-item-6 {
+  grid-column: 2;
+  grid-row: 3;
+  max-width: 330px;
 }
 
-.cart-row {
-  display: flex;
+.grid-item-7 {
+  grid-column: 1;
+  grid-row: 4;
 }
 
-.cart-item {
-  width: 45%;
+.grid-item-8 {
+  grid-column: 2;
+  grid-row: 4;
+  max-width: 330px;
 }
 
-.cart-price {
-  width: 20%;
-  font-size: 1.2em;
-  color: #333;
+.grid-item-9 {
+  grid-column: 1;
+  grid-row: 5;
 }
 
-.cart-quantity {
-  width: 35%;
+.grid-item-10 {
+  grid-column: 2;
+  grid-row: 5;
+  max-width: 330px;
 }
 
-.cart-item-title {
-  color: #333;
-  margin-left: 0.5em;
-  font-size: 1.2em;
-}
 
-.cart-item-image {
-  width: 75px;
-  height: auto;
-  border-radius: 10px;
-}
-
-.btn-danger {
-  color: white;
-  background-color: #eb5757;
-  border: none;
-  border-radius: 0.3em;
-  font-weight: bold;
-}
-
-.btn-danger:hover {
-  background-color: #cc4c4c;
-}
-
-.cart-quantity-input {
-  height: 34px;
-  width: 50px;
+.button {
+  border: 1px solid hsl(200, 100%, 30%);
+  background-color: hsl(200, 100%, 50%);
   border-radius: 5px;
-  border: 1px solid #56ccf2;
-  background-color: #eee;
-  color: #333;
-  padding: 0;
-  text-align: center;
-  font-size: 1.2em;
-  margin-right: 25px;
+  padding: 10px;
+  margin: 10px 4px;
+  color: white;
+  outline: none;
+  min-width: 60px;
 }
 
-.cart-row:last-child {
-  border-bottom: 1px solid black;
+.button_selected {
+  background-color: hsl(44, 100%, 50%);
 }
 
-.cart-row:last-child .cart-column {
-  border: none;
+.button:hover {
+  border-color: black;
 }
 
-.cart-total {
-  text-align: end;
-  margin-top: 10px;
-  margin-right: 10px;
+.button:disabled {
+  background-color: hsl(203, 8%, 68%);
 }
 
-.cart-total-title {
+.table_heading {
+  font-size: 80%;
+  color: #888888;
+  border-bottom: 1px solid #cccccc;
+}
+
+.hide {
+  display: none;
+}
+
+.metrics_table {
+  font-size: 80%;
+}
+.metric_name {
+  text-align: right;
+}
+.metric_large {
+  text-align: left;
   font-weight: bold;
-  font-size: 1.5em;
-  color: black;
-  margin-right: 20px;
+  font-size: 230%;
+  color: #207070;
 }
 
-.cart-total-price {
-  color: #333;
-  font-size: 1.1em;
+.metric_highlight {
+  color: #DC143C;
+}
+.metric_value {
+  text-align: left;
+  font-weight: bold;
+}
+.metric_units {
+  text-align: left;
 }
 
-.btn-purchase {
-  display: block;
-  margin: 40px auto 80px auto;
-  font-size: 1.75em;
+.label {
+ font-style: italic;
+}
+
+#lightbox {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+#lightbox.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+}
+
+#lightbox img {
+  max-width: 100%;
+  max-height: 80%;
+  padding: 2px;
+  background-color: black;
+  border: 2px solid white;
 }

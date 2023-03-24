@@ -1,7 +1,7 @@
 # flask production app
 import os
 
-from flask import Flask
+from flask import (Flask, render_template)
 
 
 def create_app(test_config=None):
@@ -24,10 +24,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    # a simple page welcome page
+    @app.route('/')
+    @app.route('/index')
+    def index():
+        return render_template('index.html', title="Welcome", description="Welcome Page")
 
     from . import data
     app.register_blueprint(data.bp)

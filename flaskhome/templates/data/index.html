@@ -1,0 +1,751 @@
+<!--klimalogg style-->
+
+<!--basic layout -->
+{% extends 'layout.html' %} {% block scripts %}
+<script defer src="{{url_for('static',filename='data/climate.js')}}"></script>
+
+{% endblock %} {% block header %}
+<h1 class="title title-large">{{title}} - Raspi Home</h1>
+{% endblock %} {% block content %}
+
+<div id="grid-main" class="grid-main">
+  <div id="station_info" class="text grid-item grid-item-1">
+    <span class="station_title">Weyprechtstr, St Poelten</span><br />
+    <span class="station_time">30-Jan-2023 21:50</span>
+  </div>
+  <div id="navigation" class="grid-item grid-item-2">
+    <div id="header">
+      <div class="navigation">
+        <button
+          class="button button_selected"
+          id="control_day"
+          onclick="choose('day')"
+        >
+          Day
+        </button>
+        <button class="button" id="control_week" onclick="choose('week')">
+          Week
+        </button>
+        <button class="button" id="control_month" onclick="choose('month')">
+          Month
+        </button>
+        <button class="button" id="control_year" onclick="choose('year')">
+          Year
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- grid-item-3: graph temp+humidity sensor 6,7,8-->
+  <div id="graphs" class="image grid-item grid-item-3">
+    <div class="data_graphs maxmin_day">
+      <img
+        src="{{url_for('static', filename='klimalogg/daytemp_c.png')}}"
+        alt="temperatures-c"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/dayhumidity_c.png')}}"
+        alt="humidity-c"
+      />
+    </div>
+    <div class="data_graphs maxmin_week hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/weektemp_c.png')}}"
+        alt="temperatures-c"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekhumidity_c.png')}}"
+        alt="humidity-c"
+      />
+    </div>
+    <div class="data_graphs maxmin_month hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/monthtemp_c.png')}}"
+        alt="temperatures-c"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthhumidity_c.png')}}"
+        alt="humidity-c"
+      />
+    </div>
+    <div class="data_graphs maxmin_year hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/yeartemp_c.png')}}"
+        alt="temperatures-c"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearhumidity_c.png')}}"
+        alt="humidity-c"
+      />
+    </div>
+  </div>
+  <!--grid-item-4 second floor-->
+  <div id="data-table" class="grid-item grid-item-4">
+    <div class="data_table">
+      <table class="metrics_table">
+        <!-- child's room (Sensor 6) -->
+        <tr>
+          <td class="table_heading">2nd Floor</td>
+          <td class="table_heading" colspan="2">ACTUAL</td>
+          <td class="table_heading">HI/LO</td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Child's Room</td>
+          <td class="metric_large">18.5</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            19.6<br />
+            15.1
+          </td>
+          <td class="metric_value maxmin_week hide">
+            19.6<br />
+            15.1
+          </td>
+          <td class="metric_value maxmin_month hide">
+            19.6<br />
+            15.1
+          </td>
+          <td class="metric_value maxmin_year hide">
+            19.6<br />
+            15.1
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Child's Room</td>
+          <td class="metric_large" colspan="2">68</td>
+          <td class="metric_value maxmin_day">
+            68<br />
+            41
+          </td>
+          <td class="metric_value maxmin_week hide">
+            69<br />
+            41
+          </td>
+          <td class="metric_value maxmin_month hide">
+            72<br />
+            41
+          </td>
+          <td class="metric_value maxmin_year hide">
+            72<br />
+            41
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!-- office room (Sensor 7) -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Office</td>
+          <td class="metric_large">18.1</td>
+          <td class="metric_value"></td>
+          <td class="maxmin_day metric_value">
+            18.5<br />
+            16.2
+          </td>
+          <td class="maxmin_week metric_value hide">
+            18.6<br />
+            16.2
+          </td>
+          <td class="maxmin_month metric_value hide">
+            58.8<br />
+            15.8
+          </td>
+          <td class="metric_value maxmin_year hide">
+            58.8<br />
+            15.8
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Office</td>
+          <td class="metric_large" colspan="2">67</td>
+          <td class="metric_value maxmin_day">
+            69<br />
+            44
+          </td>
+          <td class="metric_value maxmin_week hide">
+            71<br />
+            44
+          </td>
+          <td class="metric_value maxmin_month hide">
+            79<br />
+            44
+          </td>
+          <td class="metric_value maxmin_year hide">
+            79<br />
+            44
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!--bedroom room (Sensor 8)  -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Bedroom</td>
+          <td class="metric_large">18.6</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            19.2<br />
+            17.2
+          </td>
+          <td class="metric_value maxmin_week hide">
+            19.3<br />
+            16.7
+          </td>
+          <td class="metric_value maxmin_month hide">
+            20.4<br />
+            16.7
+          </td>
+          <td class="metric_value maxmin_year hide">
+            20.4<br />
+            16.7
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Bedroom</td>
+          <td class="metric_large" colspan="2">66</td>
+          <td class="metric_value maxmin_day">
+            70<br />
+            44
+          </td>
+          <td class="metric_value maxmin_week hide">
+            73<br />
+            44
+          </td>
+          <td class="metric_value maxmin_month hide">
+            83<br />
+            44
+          </td>
+          <td class="metric_value maxmin_year hide">
+            83<br />
+            44
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- End of Grid item 4-->
+  <!-- grid-item-5: graph temp+humidity sensor 3,4,5-->
+  <div id="graphs" class="image grid-item grid-item-5">
+    <div class="data_graphs maxmin_day">
+      <img
+        src="{{url_for('static', filename='klimalogg/daytemp_b.png')}}"
+        alt="temperatures-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/dayhumidity_b.png')}}"
+        alt="humidity-b"
+      />
+    </div>
+    <div class="data_graphs maxmin_week hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/weektemp_b.png')}}"
+        alt="temperatures-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekhumidity_b.png')}}"
+        alt="humidity-b"
+      />
+    </div>
+    <div class="data_graphs maxmin_month hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/monthtemp_b.png')}}"
+        alt="temperatures-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthhumidity_b.png')}}"
+        alt="humidity-b"
+      />
+    </div>
+    <div class="data_graphs maxmin_year hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/yeartemp_b.png')}}"
+        alt="temperatures-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearhumidity_b.png')}}"
+        alt="humidity-b"
+      />
+    </div>
+  </div>
+  <!--grid-item-6 first floor-->
+  <div id="data-table" class="grid-item grid-item-6">
+    <div class="data_table">
+      <table class="metrics_table">
+        <!-- kitchen room (Sensor 3) -->
+        <tr>
+          <td class="table_heading">1st Floor</td>
+          <td class="table_heading" colspan="2">ACTUAL</td>
+          <td class="table_heading">HI/LO</td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Kitchen</td>
+          <td class="metric_large">20.3</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            22.6<br />
+            18.0
+          </td>
+          <td class="metric_value maxmin_week hide">
+            22.6<br />
+            18.0
+          </td>
+          <td class="metric_value maxmin_month hide">
+            23.0<br />
+            14.8
+          </td>
+          <td class="metric_value maxmin_year hide">
+            23.0<br />
+            14.8
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Kitchen</td>
+          <td class="metric_large" colspan="2">56</td>
+          <td class="metric_value maxmin_day">
+            69<br />
+            43
+          </td>
+          <td class="metric_value maxmin_week hide">
+            69<br />
+            43
+          </td>
+          <td class="metric_value maxmin_month hide">
+            79<br />
+            43
+          </td>
+          <td class="metric_value maxmin_year hide">
+            79<br />
+            43
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!-- guest room (Sensor 4) -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Guestroom</td>
+          <td class="metric_large">17.8</td>
+          <td class="metric_value"></td>
+          <td class="maxmin_day metric_value">
+            20.2<br />
+            14.3
+          </td>
+          <td class="maxmin_week metric_value hide">
+            20.2<br />
+            11.6
+          </td>
+          <td class="maxmin_month metric_value hide">
+            20.2<br />
+            11.5
+          </td>
+          <td class="metric_value maxmin_year hide">
+            20.2<br />
+            11.5
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Guestroom</td>
+          <td class="metric_large" colspan="2">63</td>
+          <td class="metric_value maxmin_day">
+            68<br />
+            45
+          </td>
+          <td class="metric_value maxmin_week hide">
+            69<br />
+            42
+          </td>
+          <td class="metric_value maxmin_month hide">
+            88<br />
+            42
+          </td>
+          <td class="metric_value maxmin_year hide">
+            88<br />
+            42
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!-- bathroom (Sensor 5)  -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Bathroom</td>
+          <td class="metric_large">19.3</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            19.6<br />
+            18.5
+          </td>
+          <td class="metric_value maxmin_week hide">
+            19.6<br />
+            17.2
+          </td>
+          <td class="metric_value maxmin_month hide">
+            21.2<br />
+            16.5
+          </td>
+          <td class="metric_value maxmin_year hide">
+            21.2<br />
+            16.5
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Bathroom</td>
+          <td class="metric_large" colspan="2">60</td>
+          <td class="metric_value maxmin_day">
+            68<br />
+            50
+          </td>
+          <td class="metric_value maxmin_week hide">
+            68<br />
+            43
+          </td>
+          <td class="metric_value maxmin_month hide">
+            88<br />
+            43
+          </td>
+          <td class="metric_value maxmin_year hide">
+            88<br />
+            43
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- End of Grid item 6-->
+  <!-- grid-item-7: graph temp+humidity sensor station,1,2-->
+  <div id="graphs" class="image grid-item grid-item-7">
+    <div class="data_graphs maxmin_day">
+      <img
+        src="{{url_for('static', filename='klimalogg/daytemp_a.png')}}"
+        alt="temperatures-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/dayhumidity_a.png')}}"
+        alt="humidity-a"
+      />
+    </div>
+    <div class="data_graphs maxmin_week hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/weektemp_a.png')}}"
+        alt="temperatures-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekhumidity_a.png')}}"
+        alt="humidity-a"
+      />
+    </div>
+    <div class="data_graphs maxmin_month hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/monthtemp_a.png')}}"
+        alt="temperatures-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthhumidity_a.png')}}"
+        alt="humidity-a"
+      />
+    </div>
+    <div class="data_graphs maxmin_year hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/yeartemp_a.png')}}"
+        alt="temperatures-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearhumidity_a.png')}}"
+        alt="humidity-a"
+      />
+    </div>
+  </div>
+  <!--grid-item-8 basement-->
+  <div id="data-table" class="grid-item grid-item-8">
+    <div class="data_table">
+      <table class="metrics_table">
+        <!-- server room (Sensor station) -->
+        <tr>
+          <td class="table_heading">Basement</td>
+          <td class="table_heading" colspan="2">ACTUAL</td>
+          <td class="table_heading">HI/LO</td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Server</td>
+          <td class="metric_large">14.1</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            14.5<br />
+            13.8
+          </td>
+          <td class="metric_value maxmin_week hide">
+            14.5<br />
+            13.8
+          </td>
+          <td class="metric_value maxmin_month hide">
+            22.5<br />
+            13.8
+          </td>
+          <td class="metric_value maxmin_year hide">
+            22.5<br />
+            13.8
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Server</td>
+          <td class="metric_large" colspan="2">76</td>
+          <td class="metric_value maxmin_day">
+            78<br />
+            75
+          </td>
+          <td class="metric_value maxmin_week hide">
+            78<br />
+            74
+          </td>
+          <td class="metric_value maxmin_month hide">
+            81<br />
+            38
+          </td>
+          <td class="metric_value maxmin_year hide">
+            81<br />
+            38
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!-- storage (Sensor 1) -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Storage</td>
+          <td class="metric_large">15.6</td>
+          <td class="metric_value"></td>
+          <td class="maxmin_day metric_value">
+            15.7<br />
+            15.5
+          </td>
+          <td class="maxmin_week metric_value hide">
+            15.7<br />
+            15.5
+          </td>
+          <td class="maxmin_month metric_value hide">
+            16.2<br />
+            14.3
+          </td>
+          <td class="metric_value maxmin_year hide">
+            16.2<br />
+            14.3
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Storage</td>
+          <td class="metric_large" colspan="2">64</td>
+          <td class="metric_value maxmin_day">
+            65<br />
+            63
+          </td>
+          <td class="metric_value maxmin_week hide">
+            65<br />
+            63
+          </td>
+          <td class="metric_value maxmin_month hide">
+            74<br />
+            63
+          </td>
+          <td class="metric_value maxmin_year hide">
+            74<br />
+            63
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+        <!-- heating room (Sensor 2)  -->
+        <tr>
+          <td class="table_heading"></td>
+          <td class="table_heading" colspan="2"></td>
+          <td class="table_heading"></td>
+          <td class="table_heading"></td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Temperature Heatingroom</td>
+          <td class="metric_large">13.6</td>
+          <td class="metric_value"></td>
+          <td class="metric_value maxmin_day">
+            13.6<br />
+            13.4
+          </td>
+          <td class="metric_value maxmin_week hide">
+            13.7<br />
+            13.4
+          </td>
+          <td class="metric_value maxmin_month hide">
+            25.7<br />
+            6.8
+          </td>
+          <td class="metric_value maxmin_year hide">
+            25.7<br />
+            6.8
+          </td>
+          <td class="metric_units">&#176;C</td>
+        </tr>
+        <tr style="vertical-align: top">
+          <td class="metric_name">Humidity Heatingroom</td>
+          <td class="metric_large" colspan="2">87</td>
+          <td class="metric_value maxmin_day">
+            87<br />
+            86
+          </td>
+          <td class="metric_value maxmin_week hide">
+            88<br />
+            86
+          </td>
+          <td class="metric_value maxmin_month hide">
+            89<br />
+            46
+          </td>
+          <td class="metric_value maxmin_year hide">
+            89<br />
+            46
+          </td>
+          <td class="metric_units">%</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- End of Grid item 8-->
+  <!-- grid-item-9: graph battery status all stations and signal quality station-->
+  <div id="graphs" class="image grid-item grid-item-9">
+    <div class="data_graphs maxmin_day">
+      <img
+        src="{{url_for('static', filename='klimalogg/daybatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/daybatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/daybatterystatus_a.png')}}"
+        alt="batterystatus-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/dayrx.png')}}"
+        alt="Signal Quality"
+      />
+    </div>
+    <div class="data_graphs maxmin_week hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/weekbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekbatterystatus_a.png')}}"
+        alt="batterystatus-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/weekrx.png')}}"
+        alt="Signal Quality"
+      />
+    </div>
+    <div class="data_graphs maxmin_month hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/monthbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthbatterystatus_a.png')}}"
+        alt="batterystatus-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/monthrx.png')}}"
+        alt="Signal Quality"
+      />
+    </div>
+    <div class="data_graphs maxmin_year hide">
+      <img
+        src="{{url_for('static', filename='klimalogg/yearbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearbatterystatus_b.png')}}"
+        alt="batterystatus-b"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearbatterystatus_a.png')}}"
+        alt="batterystatus-a"
+      />
+      <img
+        src="{{url_for('static', filename='klimalogg/yearrx.png')}}"
+        alt="Signal Quality"
+      />
+    </div>
+  </div>
+  <!--grid-item-10 server info-->
+  <div id="data-table" class="grid-item grid-item-10 label">
+    <table>
+      <tr>
+        <td class="label">altitude:</td>
+        <td>267 meters</td>
+      </tr>
+      <tr>
+        <td class="label">location:</td>
+        <td>
+          48&deg; 12.00' N,
+          015&deg; 38.00'
+          E
+        </td>
+      </tr>
+      <tr>
+        <td class="label">station:</td>
+        <td>TFA KlimaLogg Pro</td>
+      </tr>
+      <tr>
+        <td class="label">server:</td>
+        <td>2 days, 23 hrs, 15 minutes</td>
+      </tr>
+      <tr>
+        <td class="label">weewx:</td>
+        <td>2 days, 21 hrs, 40 minutes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>4.9.1</td>
+      </tr>
+    </table>
+  </div>
+  <!-- End of Grid item 10-->
+</div>
+{% endblock %}

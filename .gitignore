@@ -1,5 +1,6 @@
 #specific files to ignore
 config.py
+definitions.py
 waitress_server.py
 chart.js
 chartjs-adapter-luxon
@@ -8,6 +9,10 @@ flask-raspi-server.code-workspace
 
 #specific folders to ignore
 /raw_data
+/tests/data_prep_test
+/tests/weewx
+/tests
+/flaskhome/static/klimalogg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
