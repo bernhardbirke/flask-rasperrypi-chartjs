@@ -1,0 +1,21 @@
+<!--electricity-->
+
+{% extends 'layout.html' %} 
+{% block scripts %}
+<script src="{{url_for('static',filename='electricity.js')}}" type="module" defer></script>
+
+{% endblock %}
+
+{% block header %}
+<h1 class="title title-large">{{title}} - Raspi Home</h1>
+{% endblock %} 
+{% block content %}
+
+
+  <div>
+    <text id="text_watt">default text: 200 W</canvas>
+  </div>
+
+
+{% endblock %}
+

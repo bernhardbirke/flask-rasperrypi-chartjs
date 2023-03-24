@@ -70,3 +70,8 @@ def climate():
      #                             "index.html"), target_path_template)
     finally:
         return render_template('data/index.html', title="Indoor Climate", description="Indoor Climate")
+
+
+@bp.route('/electricity', methods=["GET", "POST"])
+def electricity():
+    return render_template('data/electricity.html', title="Electricity", description="Data concerning electricity")
