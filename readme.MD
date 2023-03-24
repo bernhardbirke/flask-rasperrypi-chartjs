@@ -50,3 +50,8 @@ waitress-serve --call 'flaskhome:create_app'
 Install Weewx on the Rasperry Pi using the instructions on https://github.com/matthewwall/weewx-klimalogg
 
 A SQ Lite database file can be found at /var/lib/weewx/. Other files are stored according to https://weewx.com/docs/usersguide.htm
+
+## Electricity
+
+To connect to the postgreSQL database. Install the module psycopg2
+pip install psycopg2

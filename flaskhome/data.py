@@ -10,6 +10,10 @@ from flaskhome.definitions import ROOT_DIR
 # load environment variables such as the directories to raw data files
 from dotenv import load_dotenv
 
+# modules for the connection to the postgreSQL Database.
+from flaskhome.postgresql_tasks import read_current_watt
+
+
 load_dotenv()
 
 
@@ -19,6 +23,7 @@ bp = Blueprint('data', __name__, url_prefix='/data')
 @bp.route('/boulderbar', methods=["GET", "POST"])
 def boulderbar():
     if request.method == "POST":
+        # print POST message
         jsonData = request.get_json()
         print(jsonData)
         # create dataset1 based on the raw datafile
@@ -44,6 +49,7 @@ def boulderbar():
 @bp.route('/climate', methods=["GET", "POST"])
 def climate():
     if request.method == "POST":
+        # print POST message
         jsonData = request.get_json()
         print(jsonData)
         # defining source and destination
@@ -55,23 +61,34 @@ def climate():
         target_path_template = os.path.join(
             ROOT_DIR, 'flaskhome/templates/data')
 
-       # files = os.listdir(klimalogg_skin_path)
+        files = os.listdir(klimalogg_skin_path)
 
         # iterating over all the files in
         # the source directory
-     #   for fname in files:
-        # copying the files to the
-        # destination directory
-      #      shutil.copy2(os.path.join(klimalogg_skin_path, fname),
-       #                  target_path_images)
+        for fname in files:
+            # copying the files to the
+            # destination directory
+            shutil.copy2(os.path.join(klimalogg_skin_path, fname),
+                         target_path_images)
 
         # copy html file in corresponding template folder
-      #  shutil.copy2(os.path.join(klimalogg_skin_path,
-     #                             "index.html"), target_path_template)
+        shutil.copy2(os.path.join(klimalogg_skin_path,
+                                  "index.html"), target_path_template)
     finally:
         return render_template('data/index.html', title="Indoor Climate", description="Indoor Climate")
 
 
 @bp.route('/electricity', methods=["GET", "POST"])
 def electricity():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        print(jsonData)
+        # connect to the smartmeter database and retrive the current power (momentanleistung_p) in watt
+        watt_row = read_current_watt()
+        array = list(watt_row)
+        print(array)
+        # return file to frontend
+        return array
+
     return render_template('data/electricity.html', title="Electricity", description="Data concerning electricity")

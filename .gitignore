@@ -6,6 +6,7 @@ chart.js
 chartjs-adapter-luxon
 luxon
 flask-raspi-server.code-workspace
+database.ini
 
 #specific folders to ignore
 /raw_data
