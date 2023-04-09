@@ -10,7 +10,7 @@ def read_current_watt():
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
         cur.execute(
-            "SELECT data_id, created_on, momentanleistung_p FROM smartmeter ORDER BY data_id DESC LIMIT 5")
+            "SELECT data_id, time, momentanleistung_p FROM smartmeter ORDER BY data_id DESC LIMIT 5")
         watt_row = cur.fetchone()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
