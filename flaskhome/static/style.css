@@ -184,7 +184,6 @@ Body {
   max-width: 330px;
 }
 
-
 .button {
   border: 1px solid hsl(200, 100%, 30%);
   background-color: hsl(200, 100%, 50%);
@@ -232,7 +231,7 @@ Body {
 }
 
 .metric_highlight {
-  color: #DC143C;
+  color: #dc143c;
 }
 .metric_value {
   text-align: left;
@@ -243,7 +242,7 @@ Body {
 }
 
 .label {
- font-style: italic;
+  font-style: italic;
 }
 
 #lightbox {
@@ -269,4 +268,11 @@ Body {
   padding: 2px;
   background-color: black;
   border: 2px solid white;
+}
+
+/* Styles for data-electricity */
+iframe {
+  border: 1px solid black;
+  width: 100%; /* takes precedence over the width set with the HTML width attribute */
+  max-width: 450px;
 }

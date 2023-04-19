@@ -53,5 +53,5 @@ A SQ Lite database file can be found at /var/lib/weewx/. Other files are stored 
 
 ## Electricity
 
-To connect to the postgreSQL database. Install the module psycopg2
+To connect to the postgreSQL database install the module psycopg2
 pip install psycopg2

@@ -10,6 +10,9 @@ from flaskhome.definitions import ROOT_DIR
 # load environment variables such as the directories to raw data files
 from dotenv import load_dotenv
 
+# load grafana url data
+from flaskhome.grafana_config import grafana_config
+
 # modules for the connection to the postgreSQL Database.
 from flaskhome.postgresql_tasks import read_current_watt
 
@@ -86,9 +89,13 @@ def electricity():
         print(jsonData)
         # connect to the smartmeter database and retrive the current power (momentanleistung_p) in watt
         watt_row = read_current_watt()
-        array = list(watt_row)
-        print(array)
+        current_power_array = list(watt_row)
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config()
+        electricity_dict = {
+            'current_power': current_power_array, 'grafana_url': grafana_url}
+        print(electricity_dict)
         # return file to frontend
-        return array
+        return electricity_dict
 
     return render_template('data/electricity.html', title="Electricity", description="Data concerning electricity")
