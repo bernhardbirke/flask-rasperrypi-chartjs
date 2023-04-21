@@ -1,37 +1,63 @@
 <!--electricity-->
 
-{% extends 'layout.html' %} 
-{% block scripts %}
-<script src="{{url_for('static',filename='data/electricity.js')}}" type="module" defer></script>
+{% extends 'layout.html' %} {% block scripts %}
+<script
+  src="{{url_for('static',filename='data/electricity.js')}}"
+  defer
+></script>
 
-{% endblock %}
-
-{% block header %}
+{% endblock %} {% block header %}
 <h1 class="title title-large">{{title}} - Raspi Home</h1>
-{% endblock %} 
-{% block content %}
+{% endblock %} {% block content %}
 
-
-  <div>
-    <text id="text_watt">default text: 200 W</canvas>
+<div id="header">
+  <div class="navigation">
+    <button
+      class="button button_selected"
+      id="control_current"
+      onclick="choose('current')"
+    >
+      Current
+    </button>
+    <button class="button" id="control_hour" onclick="choose('hour')">
+      Hour
+    </button>
+    <button class="button" id="control_day" onclick="choose('day')">Day</button>
+    <button class="button" id="control_month" onclick="choose('month')">
+      Month
+    </button>
+    <button class="button" id="control_year" onclick="choose('year')">
+      Year
+    </button>
   </div>
+</div>
 
-  <div>
-    <iframe id="currentEnergy" src="" width="250" height="200" frameborder="0"></iframe>
-  </div>
+<div class="data_graphs maxmin_current">
+  <text id="text_watt">default text: 200 W</text>
+</div>
 
-  <div>
-    <iframe id="hourlyEnergy" src="" width="450" height="200" frameborder="0"></iframe>
-  </div>
+<div class="data_graphs maxmin_current">
+  <iframe class="iframe_gauge" id="currentEnergy" src=""></iframe>
+</div>
 
-  <div>
-    <iframe id="leistungsverlauf" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
-  </div>
+<div class="data_graphs maxmin_current">
+  <iframe class="iframe_timeline" id="leistungsverlauf" src=""></iframe>
+</div>
 
-  <div>
-    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=14.841156005859377%2C47.8085431415187%2C16.38198852539063%2C48.44195631996267&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=10/48.1262/15.6116">View Larger Map</a></small>
-  </div>
+<div class="data_graphs maxmin_hour hide">
+  <iframe class="iframe_table" id="hourlyEnergy" src=""></iframe>
+</div>
 
+<div class="data_graphs maxmin_day hide">
+  <iframe class="iframe_table" id="dailyEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_month hide">
+  <iframe class="iframe_table" id="monthlyEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_year hide">
+  <iframe class="iframe_table" id="yearlyEnergy" src=""></iframe>
+</div>
 
 {% endblock %}
-

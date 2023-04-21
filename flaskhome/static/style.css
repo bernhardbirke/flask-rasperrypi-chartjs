@@ -274,5 +274,19 @@ Body {
 iframe {
   border: 1px solid black;
   width: 100%; /* takes precedence over the width set with the HTML width attribute */
-  max-width: 450px;
+  max-width: 650px;
+}
+
+.iframe_table {
+  height: 700px;
+}
+
+.iframe_gauge {
+  height: 250px;
+}
+
+.iframe_timeline {
+  height: 600px;
+  width: 600px;
+  transform: rotate(0.25turn);
 }

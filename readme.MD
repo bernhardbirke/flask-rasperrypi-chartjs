@@ -55,3 +55,15 @@ A SQ Lite database file can be found at /var/lib/weewx/. Other files are stored 
 
 To connect to the postgreSQL database install the module psycopg2
 pip install psycopg2
+
+### Grafana Query
+
+```
+SELECT date_trunc('day', time) d, sum(wirkenergie_p_diff) AS "Power Usage", sum(wirkenergie_n_diff) AS "Einspeisung" FROM smartmeter_diff GROUP BY d ORDER BY d LIMIT 50;
+
+```
+
+```
+SELECT date_trunc('hour', time) h, sum(wirkenergie_p_diff) AS "Power Usage", sum(wirkenergie_n_diff) AS "Einspeisung" FROM smartmeter_diff GROUP BY h ORDER BY h LIMIT 40;
+
+```
