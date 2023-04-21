@@ -274,7 +274,7 @@ Body {
 iframe {
   border: 1px solid black;
   width: 100%; /* takes precedence over the width set with the HTML width attribute */
-  max-width: 650px;
+  max-width: 850px;
 }
 
 .iframe_table {
@@ -286,7 +286,7 @@ iframe {
 }
 
 .iframe_timeline {
-  height: 600px;
-  width: 600px;
-  transform: rotate(0.25turn);
+  height: 500px;
+  width: 850px;
+  /*  transform: rotate(0.25turn);*/
 }
