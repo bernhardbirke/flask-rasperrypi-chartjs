@@ -281,6 +281,10 @@ iframe {
   height: 700px;
 }
 
+.iframe_table_high {
+  height: 1400px;
+}
+
 .iframe_gauge {
   height: 250px;
 }
