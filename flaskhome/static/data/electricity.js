@@ -60,7 +60,12 @@ function fetchDataElectricity() {
           dailyEnergyElement.src = electricity_dict["grafana_url"]["url_id6"];
           monthlyEnergyElement.src = electricity_dict["grafana_url"]["url_id8"];
           yearlyEnergyElement.src = electricity_dict["grafana_url"]["url_id9"];
-          textFieldElement.innerText = `The current Power usage is:${electricity_dict["current_power"][3]} Watts \n The total energy supply is ${electricity_dict["current_power"][2]} Watthours \n At time: ${electricity_dict["current_power"][1]}`;
+          textFieldElement.innerText = `The current Power usage is:${electricity_dict["current_power"][3]} [W] 
+          \n The total energy usage is: ${electricity_dict["current_power"][2]} [Wh] 
+          \n At time: ${electricity_dict["current_power"][1]}
+          \n The current Power Supply (PV-System) is:${electricity_dict["current_fronius"][2]} [W] 
+          \n The total energy supply (PV-System) is: ${electricity_dict["current_fronius"][3]} [Wh] 
+          \n At time: ${electricity_dict["current_fronius"][1]}`;
         });
       } else {
         throw Error("Something went wrong");

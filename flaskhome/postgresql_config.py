@@ -2,10 +2,10 @@ import os
 from configparser import ConfigParser
 from flaskhome.definitions import ROOT_DIR
 
-url_to_database = os.path.join(ROOT_DIR, 'database.ini')
+url_to_database = os.path.join(ROOT_DIR, "database.ini")
 
 
-def config(filename=url_to_database, section='postgresql'):
+def config(filename=url_to_database, section="postgresql"):
     """define the details of a database connection based on database.ini"""
     # create a parser
     parser = ConfigParser()
@@ -20,6 +20,7 @@ def config(filename=url_to_database, section='postgresql'):
             db[param[0]] = param[1]
     else:
         raise Exception(
-            'Section {0} not found in the {1} file'.format(section, filename))
+            "Section {0} not found in the {1} file".format(section, filename)
+        )
 
     return db

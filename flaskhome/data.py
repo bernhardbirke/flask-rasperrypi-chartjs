@@ -2,11 +2,10 @@
 import os
 from pathlib import Path
 import shutil
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
-)
+from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from flaskhome.data_prep import boulderbar_prep
 from flaskhome.definitions import ROOT_DIR
+
 # load environment variables such as the directories to raw data files
 from dotenv import load_dotenv
 
@@ -14,16 +13,16 @@ from dotenv import load_dotenv
 from flaskhome.grafana_config import grafana_config
 
 # modules for the connection to the postgreSQL Database.
-from flaskhome.postgresql_tasks import read_current_watt
+from flaskhome.postgresql_tasks import read_current_watt, read_current_fronius
 
 
 load_dotenv()
 
 
-bp = Blueprint('data', __name__, url_prefix='/data')
+bp = Blueprint("data", __name__, url_prefix="/data")
 
 
-@bp.route('/boulderbar', methods=["GET", "POST"])
+@bp.route("/boulderbar", methods=["GET", "POST"])
 def boulderbar():
     if request.method == "POST":
         # print POST message
@@ -31,14 +30,14 @@ def boulderbar():
         print(jsonData)
         # create dataset1 based on the raw datafile
         url_to_jsonl = os.getenv("BOULDERBAR_HBF_PATH")
-     #   url_to_jsonl = os.path.join(
-     #       ROOT_DIR, 'raw_data', 'boulderbarhbf.jsonl')
+        #   url_to_jsonl = os.path.join(
+        #       ROOT_DIR, 'raw_data', 'boulderbarhbf.jsonl')
         label = "Boulderbar Hauptbahnhof"
         dataset1 = boulderbar_prep(url_to_jsonl, label)
         # create dataset2 based on the raw datafile
         url_to_jsonl = os.getenv("BOULDERBAR_HAN_PATH")
-      #  url_to_jsonl = os.path.join(
-       #     ROOT_DIR, 'raw_data', 'boulderbarhan.jsonl')
+        #  url_to_jsonl = os.path.join(
+        #     ROOT_DIR, 'raw_data', 'boulderbarhan.jsonl')
         label = "Boulderbar Hannovergasse"
         dataset2 = boulderbar_prep(url_to_jsonl, label)
         # merge the Datasets into one File
@@ -46,10 +45,14 @@ def boulderbar():
         # return file to frontend
         return file
 
-    return render_template('data/selectdate.html', title="Boulderbar Capacity", description="Capacity of Boulderbar")
+    return render_template(
+        "data/selectdate.html",
+        title="Boulderbar Capacity",
+        description="Capacity of Boulderbar",
+    )
 
 
-@bp.route('/climate', methods=["GET", "POST"])
+@bp.route("/climate", methods=["GET", "POST"])
 def climate():
     if request.method == "POST":
         # print POST message
@@ -59,10 +62,8 @@ def climate():
     # paths
     try:
         klimalogg_skin_path = os.getenv("KLIMALOGG_WEEWX_HTML")
-        target_path_images = os.path.join(
-            ROOT_DIR, 'flaskhome/static/klimalogg')
-        target_path_template = os.path.join(
-            ROOT_DIR, 'flaskhome/templates/data')
+        target_path_images = os.path.join(ROOT_DIR, "flaskhome/static/klimalogg")
+        target_path_template = os.path.join(ROOT_DIR, "flaskhome/templates/data")
 
         files = os.listdir(klimalogg_skin_path)
 
@@ -71,31 +72,45 @@ def climate():
         for fname in files:
             # copying the files to the
             # destination directory
-            shutil.copy2(os.path.join(klimalogg_skin_path, fname),
-                         target_path_images)
+            shutil.copy2(os.path.join(klimalogg_skin_path, fname), target_path_images)
 
         # copy html file in corresponding template folder
-        shutil.copy2(os.path.join(klimalogg_skin_path,
-                                  "index.html"), target_path_template)
+        shutil.copy2(
+            os.path.join(klimalogg_skin_path, "index.html"), target_path_template
+        )
     finally:
-        return render_template('data/index.html', title="Indoor Climate", description="Indoor Climate")
+        return render_template(
+            "data/index.html", title="Indoor Climate", description="Indoor Climate"
+        )
 
 
-@bp.route('/electricity', methods=["GET", "POST"])
+@bp.route("/electricity", methods=["GET", "POST"])
 def electricity():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
         print(jsonData)
-        # connect to the smartmeter database and retrive the current power (momentanleistung_p) in watt
+        # connect to the smartmeter database and retrive total used electricity (wirkenergie_p) in Wh and the current power (momentanleistung_p) in watt
+        # watt_row -> list[data_id, time, wirkenergie_p, momentanleistung_p]
         watt_row = read_current_watt()
-        current_power_array = list(watt_row)
+        current_power_list = list(watt_row)
+        # connect to the fronius_gen24 database and retrive PAC (harvesting current power) in W and TOTAL_ENERGY (total harvested energy) in Watthours
+        # fronius_row -> list[data_id, time, PAC, TOTAL_ENERGY]
+        fronius_row = read_current_fronius()
+        current_fronius_list = list(fronius_row)
         # load the grafana url based on the database.ini file
         grafana_url = grafana_config()
         electricity_dict = {
-            'current_power': current_power_array, 'grafana_url': grafana_url}
+            "current_power": current_power_list,
+            "current_fronius": current_fronius_list,
+            "grafana_url": grafana_url,
+        }
         print(electricity_dict)
         # return file to frontend
         return electricity_dict
 
-    return render_template('data/electricity.html', title="Electricity", description="Data concerning electricity")
+    return render_template(
+        "data/electricity.html",
+        title="Electricity",
+        description="Data concerning electricity",
+    )
