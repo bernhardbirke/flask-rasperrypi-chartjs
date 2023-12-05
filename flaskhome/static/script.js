@@ -12,8 +12,29 @@ let sessionVariables = {
   chartObject: "",
 };
 
-//set default beginning and ending
+function set_default_begin_end() {
+  //set default beginning and ending
+  //set beginning 3 days before now
+  let currentDate_begin = new Date();
+  currentDate.setDate(currentDate_begin.getDate() - 3);
+  let begin =
+    currentDate_begin.toISOString().substring(0, 10) +
+    "T" +
+    currentDate_begin.toTimeString().substring(0, 8);
+  //set ending to now
+  let currentDate_end = new Date();
+  let end =
+    currentDate_end.toISOString().substring(0, 10) +
+    "T" +
+    currentDate_end.toTimeString().substring(0, 8);
+  let dates = { beginning: begin, ending: end };
+  let dataChart = sessionVariables.chartObject;
+  updateChart(dates, dataChart);
+  beginningElement.value = begin;
+  endingElement.value = end;
+}
 
+//listen to changes of date,time in input
 beginningElement.addEventListener("input", (e) => {
   let begin = Date.parse(beginningElement.value);
   let end = Date.parse(endingElement.value);
@@ -60,3 +81,4 @@ function fetchDataAndDrawChart(canvasElement, nameOfChart) {
 }
 
 fetchDataAndDrawChart(ctx, "boulderChart");
+set_default_begin_end();
