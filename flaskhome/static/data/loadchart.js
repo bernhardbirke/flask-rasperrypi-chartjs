@@ -11,7 +11,7 @@ function loadChart(canvasElement, dataFile, nameOfChart) {
         x: {
           type: "time",
           adapters: { date: { locale: "de", zone: "UTC+1" } },
-          min: Date.now() - 7 * 24 * 60 * 60 * 1000,
+          min: Date.now() - 4 * 24 * 60 * 60 * 1000,
           max: Date.now(),
           time: {
             //unit: "hour",

@@ -14,9 +14,10 @@ let sessionVariables = {
 
 function set_default_begin_end() {
   //set default beginning and ending
-  //set beginning 3 days before now
+  //set beginning 4 days before now
+  const days_from_now = 4;
   let currentDate_begin = new Date();
-  currentDate.setDate(currentDate_begin.getDate() - 3);
+  currentDate_begin.setDate(currentDate_begin.getDate() - days_from_now);
   let begin =
     currentDate_begin.toISOString().substring(0, 10) +
     "T" +
@@ -70,6 +71,7 @@ function fetchDataAndDrawChart(canvasElement, nameOfChart) {
           console.log(response);
           let chartName = loadChart(canvasElement, response, nameOfChart);
           sessionVariables.chartObject = chartName;
+          set_default_begin_end();
         });
       } else {
         throw Error("Something went wrong");
@@ -81,4 +83,3 @@ function fetchDataAndDrawChart(canvasElement, nameOfChart) {
 }
 
 fetchDataAndDrawChart(ctx, "boulderChart");
-set_default_begin_end();
