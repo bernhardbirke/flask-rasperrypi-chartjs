@@ -105,12 +105,25 @@ pip install psycopg2-binary
 
 ### Grafana Query
 
+To visualize the data the Grafana dashboard is used.
+The following queries show how to query the data from the postgresql database.
+
 ```
-SELECT date_trunc('day', time) d, sum(wirkenergie_p_diff) AS "Power Usage", sum(wirkenergie_n_diff) AS "Einspeisung" FROM smartmeter_diff GROUP BY d ORDER BY d LIMIT 50;
+SELECT date_trunc('minute', time) m, sum(wirkenergie_p_diff) AS "Power Usage", sum(wirkenergie_n_diff) AS "Einspeisung" FROM smartmeter_diff GROUP BY m ORDER BY m DESC LIMIT 60;
 
 ```
 
 ```
-SELECT date_trunc('hour', time) h, sum(wirkenergie_p_diff) AS "Power Usage", sum(wirkenergie_n_diff) AS "Einspeisung" FROM smartmeter_diff GROUP BY h ORDER BY h LIMIT 40;
+SELECT
+date_trunc('hour', COALESCE(s.time, f.time)) h,
+(sum(s.wirkenergie_p_diff) - sum(s.wirkenergie_n_diff) + sum(f.total_energy_diff)) AS "Total Power Usage",
+sum(f.total_energy_diff) AS "Total Solar Gain",
+sum(s.wirkenergie_p_diff) AS "Metered Power Consumption",
+sum(s.wirkenergie_n_diff) AS "Metered Solar Feed-In"
+FROM smartmeter_diff s
+FULL OUTER JOIN fronius_gen24_diff f
+ON s.time = f.time
+GROUP BY h
+ORDER BY h DESC LIMIT 24;
 
 ```
