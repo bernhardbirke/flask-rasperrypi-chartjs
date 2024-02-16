@@ -119,3 +119,25 @@ def electricity():
         title="Electricity",
         description="Data concerning electricity",
     )
+
+
+@bp.route("/heat_pump_temp", methods=["GET", "POST"])
+def heat_pump_temp():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        print(jsonData)
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="grafana_url_nibe")
+        electricity_dict = {
+            "grafana_url": grafana_url,
+        }
+        print(electricity_dict)
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/heat_pump_temp.html",
+        title="Heat Pump Temperatures",
+        description="Data concerning Heat Pump Temperatures",
+    )

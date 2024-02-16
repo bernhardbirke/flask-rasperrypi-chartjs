@@ -1,0 +1,63 @@
+<!--heat_pump_temp-->
+
+{% extends 'layout.html' %} {% block scripts %}
+<script
+  src="{{url_for('static',filename='data/heat_pump_temp.js')}}"
+  defer
+></script>
+
+{% endblock %} {% block header %}
+<h1 class="title title-large">{{title}} - Raspi Home</h1>
+{% endblock %} {% block content %}
+
+<div id="header">
+  <div class="navigation">
+    <button
+      class="button button_selected"
+      id="control_current"
+      onclick="choose('current')"
+    >
+      Current
+    </button>
+    <button class="button" id="control_hour" onclick="choose('hour')">
+      Hour
+    </button>
+    <button class="button" id="control_day" onclick="choose('day')">Day</button>
+    <button class="button" id="control_month" onclick="choose('month')">
+      Month
+    </button>
+    <button class="button" id="control_year" onclick="choose('year')">
+      Year
+    </button>
+  </div>
+</div>
+
+<div class="data_graphs maxmin_current">
+  <text id="text_watt">default text: 200 W</text>
+</div>
+
+<div class="data_graphs maxmin_current">
+  <iframe class="iframe_gauge" id="currentEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_current">
+  <iframe class="iframe_table_high" id="leistungsverlauf" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_hour hide">
+  <iframe class="iframe_table_high" id="hourlyEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_day hide">
+  <iframe class="iframe_table_high" id="dailyEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_month hide">
+  <iframe class="iframe_table" id="monthlyEnergy" src=""></iframe>
+</div>
+
+<div class="data_graphs maxmin_year hide">
+  <iframe class="iframe_table" id="yearlyEnergy" src=""></iframe>
+</div>
+
+{% endblock %}
