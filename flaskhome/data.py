@@ -40,8 +40,13 @@ def boulderbar():
         #     ROOT_DIR, 'raw_data', 'boulderbarhan.jsonl')
         label = "Boulderbar Hannovergasse"
         dataset2 = boulderbar_prep(url_to_jsonl, label)
+        url_to_jsonl = os.getenv("BOULDERBAR_WB_PATH")
+        #  url_to_jsonl = os.path.join(
+        #     ROOT_DIR, 'raw_data', 'boulderbarwb.jsonl')
+        label = "Boulderbar Wienerberg"
+        dataset3 = boulderbar_prep(url_to_jsonl, label)
         # merge the Datasets into one File
-        file = {"datasets": [dataset1, dataset2]}
+        file = {"datasets": [dataset1, dataset2, dataset3]}
         # return file to frontend
         return file
 
