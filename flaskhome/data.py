@@ -94,7 +94,6 @@ def electricity():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
-        print(jsonData)
         # connect to the smartmeter database and retrive total used electricity (wirkenergie_p) in Wh and the current power (momentanleistung_p) in watt
         # watt_row -> list[data_id, time, wirkenergie_p, momentanleistung_p]
         watt_row = read_current_watt()
@@ -110,7 +109,6 @@ def electricity():
             "current_fronius": current_fronius_list,
             "grafana_url": grafana_url,
         }
-        print(electricity_dict)
         # return file to frontend
         return electricity_dict
 
@@ -126,13 +124,11 @@ def heat_pump_temp():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
-        print(jsonData)
         # load the grafana url based on the database.ini file
         grafana_url = grafana_config(section="grafana_url_nibe")
         electricity_dict = {
             "grafana_url": grafana_url,
         }
-        print(electricity_dict)
         # return file to frontend
         return electricity_dict
 
@@ -140,4 +136,56 @@ def heat_pump_temp():
         "data/heat_pump_temp.html",
         title="Heat Pump Temperatures",
         description="Data concerning Heat Pump Temperatures",
+    )
+
+
+@bp.route("/heat_pump_stats", methods=["GET", "POST"])
+def heat_pump_stats():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="grafana_url_heat_pump_stats")
+        electricity_dict = {
+            "grafana_url": grafana_url,
+        }
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/heat_pump_stats.html",
+        title="Heat Pump Statistics",
+        description="Data concerning Heat Pump Statistics",
+    )
+
+
+@bp.route("/power_consumption", methods=["GET", "POST"])
+def electricity():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        ###modify -->
+        # connect to the smartmeter database and retrive total used electricity (wirkenergie_p) in Wh and the current power (momentanleistung_p) in watt
+        # watt_row -> list[data_id, time, wirkenergie_p, momentanleistung_p]
+        watt_row = read_current_watt()
+        current_power_list = list(watt_row)
+        # connect to the fronius_gen24 database and retrive PAC (harvesting current power) in W and TOTAL_ENERGY (total harvested energy) in Watthours
+        # fronius_row -> list[data_id, time, PAC, TOTAL_ENERGY]
+        fronius_row = read_current_fronius()
+        current_fronius_list = list(fronius_row)
+        ### <-- modify
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="grafana_url_power_consumption")
+        electricity_dict = {
+            "current_heat_pump": current_power_list,
+            "current_fritz": current_fronius_list,
+            "grafana_url": grafana_url,
+        }
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/power_consumption.html",
+        title="Power Consumption",
+        description="Data concerning power consumption",
     )
