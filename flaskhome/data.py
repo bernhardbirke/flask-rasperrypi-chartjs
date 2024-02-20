@@ -103,7 +103,7 @@ def electricity():
         fronius_row = read_current_fronius()
         current_fronius_list = list(fronius_row)
         # load the grafana url based on the database.ini file
-        grafana_url = grafana_config()
+        grafana_url = grafana_config(section="grafana_url_electricity")
         electricity_dict = {
             "current_power": current_power_list,
             "current_fronius": current_fronius_list,
@@ -160,7 +160,7 @@ def heat_pump_stats():
 
 
 @bp.route("/power_consumption", methods=["GET", "POST"])
-def electricity():
+def power_consumption():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
