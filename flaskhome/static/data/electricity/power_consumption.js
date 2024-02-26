@@ -60,12 +60,6 @@ function fetchData() {
           dailyEnergyElement.src = electricity_dict["grafana_url"]["url_id6"];
           monthlyEnergyElement.src = electricity_dict["grafana_url"]["url_id8"];
           yearlyEnergyElement.src = electricity_dict["grafana_url"]["url_id9"];
-          textFieldElement.innerText = `The current power consumption of the heat pump is:${electricity_dict["current_heat_pump"][3]} [W] 
-          \n The total energy consumption of the heat pump is: ${electricity_dict["current_heat_pump"][2]} [Wh] 
-          \n At time: ${electricity_dict["current_heat_pump"][1]}
-          \n The current power consumption of the dehumidifier is:${electricity_dict["current_fritz"][2]} [W] 
-          \n The total energy consumption of the dehumidifier is: ${electricity_dict["current_fritz"][3]} [Wh] 
-          \n At time: ${electricity_dict["current_fritz"][1]}`;
         });
       } else {
         throw Error("Something went wrong");

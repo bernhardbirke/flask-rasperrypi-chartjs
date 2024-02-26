@@ -127,3 +127,31 @@ GROUP BY h
 ORDER BY h DESC LIMIT 24;
 
 ```
+
+### Heat Pump Query
+
+```
+SELECT date_bin('5 minutes', time, TIMESTAMP '2020-01-01') AS m,
+SUM(brauchwasser_nur_verdichter_diff) AS "Wärmemenge Brauchwasser",
+SUM(heizung_nur_verdichter_diff) AS "Wärmemenge Heizung",
+(SUM(stromverbrauch) / 3600000) AS Stromverbrauch,
+(SUM(brauchwasser_nur_verdichter_diff) + SUM(heizung_nur_verdichter_diff))/ NULLIF((SUM(stromverbrauch)/3600000),0) AS Arbeitszahl
+FROM nibe_diff
+GROUP BY m
+ORDER BY m
+DESC Limit 24;
+
+
+```
+
+```
+SELECT date_trunc('day', time) m,
+SUM(verdichterstarts_diff) AS Verdichterstarts,
+SUM(gesamtbetriebszeit_verdichter_diff) AS Gesamtbetriebszeit,
+SUM(gesamtbetriebszeit_verdichter_diff) / NULLIF(SUM(verdichterstarts_diff),0) AS "Verhältnis Zeit/Start"
+FROM nibe_diff
+GROUP BY m
+ORDER BY m
+DESC Limit 31;
+
+```

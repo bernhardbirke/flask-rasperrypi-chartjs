@@ -130,21 +130,9 @@ def electricity_power_consumption():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
-        ###modify -->
-        # connect to the smartmeter database and retrive total used electricity (wirkenergie_p) in Wh and the current power (momentanleistung_p) in watt
-        # watt_row -> list[data_id, time, wirkenergie_p, momentanleistung_p]
-        watt_row = read_current_watt()
-        current_power_list = list(watt_row)
-        # connect to the fronius_gen24 database and retrive PAC (harvesting current power) in W and TOTAL_ENERGY (total harvested energy) in Watthours
-        # fronius_row -> list[data_id, time, PAC, TOTAL_ENERGY]
-        fronius_row = read_current_fronius()
-        current_fronius_list = list(fronius_row)
-        ### <-- modify
         # load the grafana url based on the database.ini file
         grafana_url = grafana_config(section="electricity_power_consumption")
         electricity_dict = {
-            "current_heat_pump": current_power_list,
-            "current_fritz": current_fronius_list,
             "grafana_url": grafana_url,
         }
         # return file to frontend

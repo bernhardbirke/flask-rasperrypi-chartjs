@@ -1,16 +1,19 @@
 // power_consumption
 //current
 const textFieldElement = document.getElementById("text_watt");
-const currentEnergyElement = document.getElementById("currentEnergy");
-const leistungsverlaufElement = document.getElementById("leistungsverlauf");
+const currentElement1 = document.getElementById("current1");
+const currentElement2 = document.getElementById("current2");
 //hour
-const hourlyEnergyElement = document.getElementById("hourlyEnergy");
+const hourElement1 = document.getElementById("hour1");
 //day
-const dailyEnergyElement = document.getElementById("dailyEnergy");
+const dayElement1 = document.getElementById("day1");
+const dayElement2 = document.getElementById("day2");
 //month
-const monthlyEnergyElement = document.getElementById("monthlyEnergy");
+const monthElement1 = document.getElementById("month1");
+const monthElement2 = document.getElementById("month2");
 //year
-const yearlyEnergyElement = document.getElementById("yearlyEnergy");
+const yearElement1 = document.getElementById("year1");
+const yearElement2 = document.getElementById("year2");
 
 textFieldElement.innerText = "Javascript loaded";
 
@@ -53,13 +56,19 @@ function fetchData() {
         electricity_dict.json().then(function (electricity_dict) {
           console.log("wainting for response");
           console.log(electricity_dict);
-          currentEnergyElement.src = electricity_dict["grafana_url"]["url_id4"];
-          leistungsverlaufElement.src =
-            electricity_dict["grafana_url"]["url_id2"];
-          hourlyEnergyElement.src = electricity_dict["grafana_url"]["url_id7"];
-          dailyEnergyElement.src = electricity_dict["grafana_url"]["url_id6"];
-          monthlyEnergyElement.src = electricity_dict["grafana_url"]["url_id8"];
-          yearlyEnergyElement.src = electricity_dict["grafana_url"]["url_id9"];
+          currentElement1.src = electricity_dict["grafana_url"]["current1"];
+          currentElement2.src = electricity_dict["grafana_url"]["current2"];
+
+          hourElement1.src = electricity_dict["grafana_url"]["hour1"];
+
+          dayElement1.src = electricity_dict["grafana_url"]["day1"];
+          dayElement2.src = electricity_dict["grafana_url"]["day2"];
+
+          monthElement1.src = electricity_dict["grafana_url"]["month1"];
+          monthElement2.src = electricity_dict["grafana_url"]["month2"];
+
+          yearElement1.src = electricity_dict["grafana_url"]["year1"];
+          yearElement2.src = electricity_dict["grafana_url"]["year2"];
         });
       } else {
         throw Error("Something went wrong");
