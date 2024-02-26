@@ -38,7 +38,7 @@ function choose(id) {
 
 // Fetch Data and Draw Chart
 function fetchData() {
-  fetch("/data/heat_pump_stats", {
+  fetch("/data/heat_pump/stats", {
     headers: {
       "Content-Type": "application/json",
     },

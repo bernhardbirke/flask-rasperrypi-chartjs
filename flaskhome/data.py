@@ -89,10 +89,10 @@ def climate():
         )
 
 
-@bp.route("/electricity")
+@bp.route("/electricity", methods=["GET", "POST"])
 def electricity():
     # You can add optional content here if desired
-    return redirect(url_for("electricity_power_usage"))
+    return redirect(url_for("data.electricity_power_usage"))
 
 
 @bp.route("/electricity/power_usage", methods=["GET", "POST"])
@@ -157,10 +157,10 @@ def electricity_power_consumption():
     )
 
 
-@bp.route("/heat_pump")
+@bp.route("/heat_pump", methods=["GET", "POST"])
 def heat_pump():
     # You can add optional content here if desired
-    return redirect(url_for("heat_pump_temp"))
+    return redirect(url_for("data.heat_pump_temp"))
 
 
 @bp.route("/heat_pump/temp", methods=["GET", "POST"])

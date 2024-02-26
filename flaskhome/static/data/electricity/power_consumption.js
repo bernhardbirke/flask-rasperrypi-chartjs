@@ -38,7 +38,7 @@ function choose(id) {
 
 // Fetch Data and Draw Chart
 function fetchData() {
-  fetch("/data/power_consumption", {
+  fetch("/data/electricity/power_consumption", {
     headers: {
       "Content-Type": "application/json",
     },

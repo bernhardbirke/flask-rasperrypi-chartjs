@@ -57,14 +57,14 @@ function choose(id) {
 
 // Fetch Data and Draw Chart
 function fetchData() {
-  fetch("/data/heat_pump_stats", {
+  fetch("/data/heat_pump/process", {
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
     body: JSON.stringify({
-      name: "heat_pump_stats",
-      task: "fetch data for heat pump statistics",
+      name: "heat_pump_process",
+      task: "fetch data for heat pump processes",
     }),
   })
     .then(function (electricity_dict) {
