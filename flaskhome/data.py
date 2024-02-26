@@ -89,8 +89,14 @@ def climate():
         )
 
 
-@bp.route("/electricity", methods=["GET", "POST"])
+@bp.route("/electricity")
 def electricity():
+    # You can add optional content here if desired
+    return redirect(url_for("electricity_power_usage"))
+
+
+@bp.route("/electricity/power_usage", methods=["GET", "POST"])
+def electricity_power_usage():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
@@ -103,7 +109,7 @@ def electricity():
         fronius_row = read_current_fronius()
         current_fronius_list = list(fronius_row)
         # load the grafana url based on the database.ini file
-        grafana_url = grafana_config(section="grafana_url_electricity")
+        grafana_url = grafana_config(section="electricity_power_usage")
         electricity_dict = {
             "current_power": current_power_list,
             "current_fronius": current_fronius_list,
@@ -113,54 +119,14 @@ def electricity():
         return electricity_dict
 
     return render_template(
-        "data/electricity.html",
-        title="Electricity",
+        "data/electricity/power_usage.html",
+        title="Power Usage",
         description="Data concerning electricity",
     )
 
 
-@bp.route("/heat_pump_temp", methods=["GET", "POST"])
-def heat_pump_temp():
-    if request.method == "POST":
-        # print POST message
-        jsonData = request.get_json()
-        # load the grafana url based on the database.ini file
-        grafana_url = grafana_config(section="grafana_url_nibe")
-        electricity_dict = {
-            "grafana_url": grafana_url,
-        }
-        # return file to frontend
-        return electricity_dict
-
-    return render_template(
-        "data/heat_pump_temp.html",
-        title="Heat Pump Temperatures",
-        description="Data concerning Heat Pump Temperatures",
-    )
-
-
-@bp.route("/heat_pump_stats", methods=["GET", "POST"])
-def heat_pump_stats():
-    if request.method == "POST":
-        # print POST message
-        jsonData = request.get_json()
-        # load the grafana url based on the database.ini file
-        grafana_url = grafana_config(section="grafana_url_heat_pump_stats")
-        electricity_dict = {
-            "grafana_url": grafana_url,
-        }
-        # return file to frontend
-        return electricity_dict
-
-    return render_template(
-        "data/heat_pump_stats.html",
-        title="Heat Pump Statistics",
-        description="Data concerning Heat Pump Statistics",
-    )
-
-
-@bp.route("/power_consumption", methods=["GET", "POST"])
-def power_consumption():
+@bp.route("/electricity/power_consumption", methods=["GET", "POST"])
+def electricity_power_consumption():
     if request.method == "POST":
         # print POST message
         jsonData = request.get_json()
@@ -175,7 +141,7 @@ def power_consumption():
         current_fronius_list = list(fronius_row)
         ### <-- modify
         # load the grafana url based on the database.ini file
-        grafana_url = grafana_config(section="grafana_url_power_consumption")
+        grafana_url = grafana_config(section="electricity_power_consumption")
         electricity_dict = {
             "current_heat_pump": current_power_list,
             "current_fritz": current_fronius_list,
@@ -185,7 +151,73 @@ def power_consumption():
         return electricity_dict
 
     return render_template(
-        "data/power_consumption.html",
+        "data/electricity/power_consumption.html",
         title="Power Consumption",
         description="Data concerning power consumption",
+    )
+
+
+@bp.route("/heat_pump")
+def heat_pump():
+    # You can add optional content here if desired
+    return redirect(url_for("heat_pump_temp"))
+
+
+@bp.route("/heat_pump/temp", methods=["GET", "POST"])
+def heat_pump_temp():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="heat_pump_temp")
+        electricity_dict = {
+            "grafana_url": grafana_url,
+        }
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/heat_pump/temp.html",
+        title="Heat Pump Temperatures",
+        description="Data concerning Heat Pump Temperatures",
+    )
+
+
+@bp.route("/heat_pump/stats", methods=["GET", "POST"])
+def heat_pump_stats():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="heat_pump_stats")
+        electricity_dict = {
+            "grafana_url": grafana_url,
+        }
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/heat_pump/stats.html",
+        title="Heat Pump Statistics",
+        description="Data concerning Heat Pump Statistics",
+    )
+
+
+@bp.route("/heat_pump/process", methods=["GET", "POST"])
+def heat_pump_process():
+    if request.method == "POST":
+        # print POST message
+        jsonData = request.get_json()
+        # load the grafana url based on the database.ini file
+        grafana_url = grafana_config(section="heat_pump_process")
+        electricity_dict = {
+            "grafana_url": grafana_url,
+        }
+        # return file to frontend
+        return electricity_dict
+
+    return render_template(
+        "data/heat_pump/process.html",
+        title="Heat Pump Processes",
+        description="Data concerning Heat Pump Processes",
     )

@@ -4,15 +4,34 @@
   <ul>
     <li><a href="{{ url_for('data.boulderbar') }}">Boulderbar</a></li>
     <li><a href="{{ url_for('data.climate') }}">Indoor Climate</a></li>
-    <li><a href="{{ url_for('data.electricity') }}">Electricity</a></li>
-    <li>
-      <a href="{{ url_for('data.heat_pump_temp') }}">Heat Pump Temperatures</a>
+    <li class="dropdown">
+      <a href="#">Electricity</a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="{{ url_for('data.electricity_power_usage') }}"
+            >Power Usage</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('data.electricity_power_consumption') }}"
+            >Power Consumption</a
+          >
+        </li>
+      </ul>
     </li>
-    <li>
-      <a href="{{ url_for('data.heat_pump_stats') }}">Heat Pump Statistics</a>
-    </li>
-    <li>
-      <a href="{{ url_for('data.power_consumption') }}">Power Consumption</a>
+    <li class="dropdown">
+      <a href="#">Heat Pump</a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="{{ url_for('data.heat_pump_temp') }}">Temperatures</a>
+        </li>
+        <li>
+          <a href="{{ url_for('data.heat_pump_stats') }}">Statistics</a>
+        </li>
+        <li>
+          <a href="{{ url_for('data.heat_pump_process') }}">Processes</a>
+        </li>
+      </ul>
     </li>
   </ul>
 </nav>
